@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Any, Optional
 
-class VectorDB(ABC):
+class Reranker(ABC):
     @abstractmethod
     def rerank(self, query: str, docs: List[dict], top_k: int = 5) -> List[dict]:
         """

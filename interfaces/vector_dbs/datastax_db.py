@@ -3,19 +3,15 @@ from astrapy import DataAPIClient
 from astrapy.constants import VectorMetric
 from astrapy.ids import UUID
 from astrapy.info import CollectionVectorServiceOptions
-import uuid
 from .base import VectorDB
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
 
 class DatastaxDB(VectorDB):
-    def __init__(self):
-        api_endpoint = os.getenv('DATASTAX_API_ENDPOINT')
-        token = os.getenv('DATASTAX_TOKEN')
+    def __init__(self, api_endpoint, token):
+        self.api_endpoint = api_endpoint
+        self.token = token
         if not api_endpoint or not token:
-            raise ValueError("DATASTAX_API_ENDPOINT and DATASTAX_TOKEN must be set in .env file")
+            raise ValueError("DATASTAX_API_ENDPOINT and DATASTAX_TOKEN must be set.")
         self.client = DataAPIClient(token)
         self.database = self.client.get_database_by_api_endpoint(api_endpoint)
         self._collection_cache = {}
